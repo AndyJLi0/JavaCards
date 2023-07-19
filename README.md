@@ -15,8 +15,7 @@ complicated interfaces and are tough for new users to use. Learning and memorizi
 be hard, and I hope my app helps with it.
 
 ## User Stories
-- As a user, I want to be able to add a card deck to my set of decks
-- As a user, I want to be able to add a flashcard to a card deck
-- As a user, I want to be able to choose how many different flashcards I view before studying the same one twice
-- As a user, I want to be able to edit and remove cards from their card decks when viewing the cards
+- As a user, I want to be able to add, edit, and remove card decks to my set of decks
+- As a user, I want to be able to add, edit, and remove, flashcards to a card deck
+- As a User, I want to be able to practice and review through all cards in a deck 
 - As a user, I want to be able to choose which side of the flashcard is shown before it is flipped
