@@ -98,7 +98,6 @@ public class FlashCardsApp {
 
     //MODIFIES: this
     //EFFECTS: removes, renames, or views a deck, returning back to decks page.
-    @SuppressWarnings({"checkstyle:SuppressWarnings", "checkstyle:MethodLength"})
     private void deckOptions(String action) {
         Scanner deckOptionsScanner = new Scanner(System.in);
         System.out.println("Type the number corresponding to each deck to " + action);
@@ -118,17 +117,25 @@ public class FlashCardsApp {
                 System.out.println("Deck no. " + input + " has been removed successfully!");
                 decksPage();
             } else {
-                Scanner nameScanner = new Scanner(System.in);
-                System.out.println("Enter new deck name: ");
-                String newName = nameScanner.nextLine();
-                CardDeck changeDeckName = myDecks.fetchDeckFromDecks(input - 1);
-                changeDeckName.renameCardDeck(newName);
-                System.out.println("Renamed!");
-                decksPage();
+                renameDeck(input - 1);
             }
         }
         deckOptionsScanner.close();
     }
+
+    //MODIFIES: this
+    //EFFECTS: renames the deck
+    public void renameDeck(Integer index) {
+        Scanner nameScanner = new Scanner(System.in);
+        System.out.println("Enter new deck name: ");
+        String newName = nameScanner.nextLine();
+        CardDeck changeDeckName = myDecks.fetchDeckFromDecks(index);
+        changeDeckName.renameCardDeck(newName);
+        System.out.println("Renamed!");
+        decksPage();
+        nameScanner.close();
+    }
+
 
     //MODIFIES: this
     //EFFECTS: creates a new deck
@@ -165,9 +172,9 @@ public class FlashCardsApp {
                         System.out.println("You have no cards! Type \"Add Card\" first!");
                         deckPage(currentDeck);
                     } else if (input.equals("Edit Card")) {
-                        flashCardOptions(1, currentDeck);
+                        flashCardOptions("edit", currentDeck);
                     } else {
-                        flashCardOptions(2, currentDeck);
+                        flashCardOptions("remove", currentDeck);
                     }
                     break;
                 case "Practice":
@@ -190,15 +197,8 @@ public class FlashCardsApp {
 
     //MODIFIES: this, current
     //EFFECTS: removes or edits a flashcard and checks for empty deck
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    private void flashCardOptions(Integer option, CardDeck current) {
+    private void flashCardOptions(String action, CardDeck current) {
         Scanner flashCardOptionsScanner = new Scanner(System.in);
-        String action;
-        if (option == 1) {
-            action = "Edit";
-        } else {
-            action = "Remove";
-        }
         System.out.println("Type the number corresponding to each flashcard to " + action);
         for (int i = 0; i < current.getSizeOfDeck(); i++) {
             System.out.println(i + 1 + ". " + current.getFlashCardList().get(i).getFrontSide());
@@ -206,10 +206,10 @@ public class FlashCardsApp {
         int input = flashCardOptionsScanner.nextInt();
         if (input < 1 || input > current.getSizeOfDeck()) {
             System.out.println("This card doesn't exist! Try Again.");
-            flashCardOptions(option, current);
+            flashCardOptions(action, current);
         }
         if (input > 0 && input <= current.getSizeOfDeck()) {
-            if (option == 1) {
+            if (action.equals("edit")) {
                 flashCardEdit(input - 1, current);
             } else {
                 myDecks.removeDeckFromDecks(input - 1);
