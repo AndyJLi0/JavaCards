@@ -22,7 +22,12 @@ public class CardDeck {
     //MODIFIES: this
     //EFFECTS: removes the given card from the card deck (assumed index valid from user handling)
     public void removeCard(Integer index) {
-        flashCardList.remove(getFlashCard(index));
+        for (int i = 0; i < getSizeOfDeck(); i++) {
+            if (index == i) {
+                flashCardList.remove(getFlashCard(i));
+                break;
+            }
+        }
     }
 
     //MODIFIES: this

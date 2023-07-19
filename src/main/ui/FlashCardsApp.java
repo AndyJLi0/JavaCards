@@ -10,7 +10,7 @@ import java.util.List;
 public class FlashCardsApp {
     private Decks myDecks;
     private static final String[] MENU_COMMANDS = {"Decks", "Learn More", "Quit"};
-    private static final String[] DECKS_COMMANDS = {"View Deck", "Main Menu", "New Deck", "Remove Deck"};
+    private static final String[] DECKS_COMMANDS = {"View Deck", "Main Menu", "New Deck", "Remove Deck", "Rename Deck"};
     private static final String[] DECK_COMMANDS = {"Decks", "Add Card", "Remove Card", "Edit Card", "Practice"};
 
     //EFFECTS: Initializes and starts the application
@@ -76,13 +76,16 @@ public class FlashCardsApp {
                     break;
                 case "View Deck":
                 case "Remove Deck":
+                case "Rename Deck":
                     if (myDecks.getDeckList().size() == 0) {
                         System.out.println("You have no decks! Type \" New Deck \" first!");
                         decksPage();
                     } else if (input.equals("View Deck")) {
-                        deckOptions(1);
+                        deckOptions("View Deck");
+                    } else if (input.equals("Remove Deck")) {
+                        deckOptions("Remove Deck");
                     } else {
-                        deckOptions(2);
+                        deckOptions("Rename Deck");
                     }
                     break;
                 default:
@@ -94,17 +97,10 @@ public class FlashCardsApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: removes or views a deck, returning back to decks page.
+    //EFFECTS: removes, renames, or views a deck, returning back to decks page.
     @SuppressWarnings({"checkstyle:SuppressWarnings", "checkstyle:MethodLength"})
-    private void deckOptions(Integer option) {
+    private void deckOptions(String action) {
         Scanner deckOptionsScanner = new Scanner(System.in);
-        String action;
-        if (option == 1) {
-            action = "View";
-
-        } else {
-            action = "Remove";
-        }
         System.out.println("Type the number corresponding to each deck to " + action);
         for (int i = 0; i < myDecks.getDeckList().size(); i++) {
             System.out.println(i + 1 + ". " + myDecks.getDeckList().get(i).getCardDeckName());
@@ -112,14 +108,22 @@ public class FlashCardsApp {
         int input = deckOptionsScanner.nextInt();
         if (input < 1 || input > myDecks.getDeckList().size()) {
             System.out.println("This deck doesn't exist! Try Again.");
-            deckOptions(option);
+            deckOptions(action);
         }
         if (input > 0 && input <= myDecks.getDeckList().size()) {
-            if (option == 1) {
+            if (action.equals("View Deck")) {
                 deckPage(myDecks.fetchDeckFromDecks(input - 1));
-            } else {
+            } else if (action.equals("Remove Deck")) {
                 myDecks.removeDeckFromDecks(input - 1);
                 System.out.println("Deck no. " + input + " has been removed successfully!");
+                decksPage();
+            } else {
+                Scanner nameScanner = new Scanner(System.in);
+                System.out.println("Enter new deck name: ");
+                String newName = nameScanner.nextLine();
+                CardDeck changeDeckName = myDecks.fetchDeckFromDecks(input - 1);
+                changeDeckName.renameCardDeck(newName);
+                System.out.println("Renamed!");
                 decksPage();
             }
         }
