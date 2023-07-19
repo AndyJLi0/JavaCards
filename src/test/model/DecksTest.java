@@ -39,6 +39,8 @@ public class DecksTest {
         decksTest.removeDeckFromDecks(0);
         assertEquals(1, decksTest.getDeckList().size());
         assertEquals(deck2, decksTest.getDeckList().get(0));
+
+
     }
     @Test
     void fetchDeckFromDecksTest() {
