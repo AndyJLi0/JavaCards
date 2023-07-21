@@ -2,8 +2,10 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 //Test class for the CardDeck Class in the Model Package
 public class CardDeckTest {
@@ -62,5 +64,33 @@ public class CardDeckTest {
         ArrayList<FlashCard> expected = new ArrayList<>();
         expected.add(testFlashCard);
         assertEquals(expected, testDeck.getFlashCardList());
+    }
+
+    @Test
+    void shuffleTest() {
+        FlashCard f1 = testFlashCard;
+        FlashCard f2 = new FlashCard("front2","back2");
+        FlashCard f3 = new FlashCard("front3","back3");
+        FlashCard f4 = new FlashCard("front4","back4");
+        FlashCard f5 = new FlashCard("front5","back5");
+        FlashCard f6 = new FlashCard("front6","back6");
+        FlashCard f7 = new FlashCard("front7","back7");
+        testDeck.addCard(f1);
+        testDeck.addCard(f2);
+        testDeck.addCard(f3);
+        testDeck.addCard(f4);
+        testDeck.addCard(f5);
+        testDeck.addCard(f6);
+        testDeck.addCard(f7);
+        ArrayList<FlashCard> originalOrder = new ArrayList<>(testDeck.getFlashCardList());
+        assertEquals(7, testDeck.getSizeOfDeck());
+        testDeck.shuffleDeck();
+        assertEquals(7, testDeck.getSizeOfDeck());
+        assertNotEquals(testDeck.getFlashCardList(),originalOrder);
+        testDeck.shuffleDeck();
+        testDeck.shuffleDeck();
+        testDeck.shuffleDeck();
+        testDeck.shuffleDeck();
+        assertNotEquals(testDeck.getFlashCardList(),originalOrder);
     }
 }
