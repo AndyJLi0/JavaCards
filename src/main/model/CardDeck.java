@@ -44,6 +44,13 @@ public class CardDeck {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: resets deck back to original flashCard order
+    public void resetDeck(ArrayList<FlashCard> original) {
+        flashCardList.clear();
+        flashCardList.addAll(original);
+    }
+
     //EFFECTS: returns the flashcards in the deck
     public ArrayList<FlashCard> getFlashCardList() {
         return flashCardList;

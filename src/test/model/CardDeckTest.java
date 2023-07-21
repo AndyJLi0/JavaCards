@@ -67,7 +67,7 @@ public class CardDeckTest {
     }
 
     @Test
-    void shuffleTest() {
+    void shuffleAndResetTest() {
         FlashCard f1 = testFlashCard;
         FlashCard f2 = new FlashCard("front2","back2");
         FlashCard f3 = new FlashCard("front3","back3");
@@ -92,5 +92,8 @@ public class CardDeckTest {
         testDeck.shuffleDeck();
         testDeck.shuffleDeck();
         assertNotEquals(testDeck.getFlashCardList(),originalOrder);
+
+        testDeck.resetDeck(originalOrder);
+        assertEquals(testDeck.getFlashCardList(),originalOrder);
     }
 }

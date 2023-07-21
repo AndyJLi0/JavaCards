@@ -253,11 +253,20 @@ public class FlashCardsApp {
     }
 
     //EFFECTS: starts the practice feature for a card deck
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void practice(CardDeck deck) {
         Scanner practiceScanner = new Scanner(System.in);
         System.out.println("Type \"Back\" to show the backside of the card first, or \"Front\" for the front.");
         String choice = practiceScanner.nextLine();
         boolean setCard = choice.equals("Front");
+
+        ArrayList<FlashCard> originalOrder = new ArrayList<>(deck.getFlashCardList());
+        System.out.println("Shuffle? (Y/N");
+        String wantShuffle = practiceScanner.nextLine();
+        if (wantShuffle.equals("Y")) {
+            deck.shuffleDeck();
+        }
+
         deck.shuffleDeck();
         for (FlashCard flashCard : deck.getFlashCardList()) {
             flashCard.setIsFrontShowing(setCard);
@@ -276,6 +285,10 @@ public class FlashCardsApp {
             }
         }
         System.out.println("Good job studying! Lets go back to the decks page.");
+
+        if (wantShuffle.equals("Y")) {
+            deck.resetDeck(originalOrder);
+        }
         decksPage();
     }
 
