@@ -48,8 +48,8 @@ public class CardDeckTest {
 
         testDeck.addCard(testFlashCard);
         testDeck.addCard(testFlashCard3);
-        testDeck.removeCard(3);
-        assertEquals(3,testDeck.getSizeOfDeck());
+        testDeck.removeCard(2);
+        assertEquals(2,testDeck.getSizeOfDeck());
     }
     @Test
     void renameCardDeckTest(){

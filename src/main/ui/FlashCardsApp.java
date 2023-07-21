@@ -208,13 +208,13 @@ public class FlashCardsApp {
             System.out.println("This card doesn't exist! Try Again.");
             flashCardOptions(action, current);
         }
-        if (input > 0 && input <= current.getSizeOfDeck()) {
+        if (input > 0 && input < current.getSizeOfDeck()) {
             if (action.equals("edit")) {
                 flashCardEdit(input - 1, current);
             } else {
-                myDecks.removeDeckFromDecks(input - 1);
-                System.out.println("Deck no. " + input + " has been removed successfully!");
-                decksPage();
+                current.removeCard(input - 1);
+                System.out.println("card no. " + input + " has been removed successfully!");
+                deckPage(current);
             }
         }
     }
@@ -257,8 +257,8 @@ public class FlashCardsApp {
         Scanner practiceScanner = new Scanner(System.in);
         System.out.println("Type \"Back\" to show the backside of the card first, or \"Front\" for the front.");
         String choice = practiceScanner.nextLine();
-        boolean setCard;
-        setCard = choice.equals("Front");
+        boolean setCard = choice.equals("Front");
+        deck.shuffleDeck();
         for (FlashCard flashCard : deck.getFlashCardList()) {
             flashCard.setIsFrontShowing(setCard);
             if (flashCard.getIsFrontShowing()) {  //front side first

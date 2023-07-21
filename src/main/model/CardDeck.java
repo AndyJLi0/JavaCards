@@ -22,18 +22,26 @@ public class CardDeck {
     //MODIFIES: this
     //EFFECTS: removes the given card from the card deck (assumed index valid from user handling)
     public void removeCard(Integer index) {
-        for (int i = 0; i < getSizeOfDeck(); i++) {
-            if (index == i) {
-                flashCardList.remove(getFlashCard(i));
-                break;
-            }
-        }
+        FlashCard card = getFlashCard(index);
+        flashCardList.remove(card);
     }
 
     //MODIFIES: this
     //EFFECTS: renames the flashcard deck name
     public void renameCardDeck(String name) {
         this.cardDeckName = name;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: shuffles the flashcard list using Fisher Yates algorithm
+    public void shuffleDeck() {
+        int n = flashCardList.size();
+        for (int i = n - 1; i > 0; i--) {
+            int j = (int) (Math.random() * (i + 1));
+            FlashCard temp = flashCardList.get(i);
+            flashCardList.set(i, flashCardList.get(j));
+            flashCardList.set(j, temp);
+        }
     }
 
     //EFFECTS: returns the flashcards in the deck
