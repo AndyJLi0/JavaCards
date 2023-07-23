@@ -24,3 +24,5 @@ be hard, and I hope my app helps with it.
 - As a user, I want to be able to practice and review through all cards in a deck
 - As a user, I want to be able to choose between practicing a shuffled vs un-shuffled deck
 - As a user, I want to be able to choose which side of the flashcard is shown before it is flipped
+- As a user, I want to have the option to save my decks and flashcards when I quit if I so choose
+- As a user, I want to have the option to load my decks and flashcards when I open the app again
