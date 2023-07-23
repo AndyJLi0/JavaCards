@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Class that represents the multiple card decks a user can create
-public class Decks {
+public class Decks implements Writable {
     private final ArrayList<CardDeck> deckList;
     private final String decksTitle;
 
@@ -40,4 +44,23 @@ public class Decks {
     public ArrayList<CardDeck> getDeckList() {
         return deckList;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("decksTitle", decksTitle);
+        json.put("cardDecks", deckListToJson());
+        return json;
+    }
+
+    //EFFECTS: returns deckList in Decks as a JSON array
+    private JSONArray deckListToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (CardDeck deck : deckList) {
+            jsonArray.put(deck.toJson());
+        }
+        return jsonArray;
+    }
+
 }

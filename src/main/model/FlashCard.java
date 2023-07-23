@@ -1,17 +1,20 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Class for representing a single flash card
-public class FlashCard {
+public class FlashCard implements Writable {
     private String frontSide;
     private String backSide;
     private Boolean isFrontShowing;
 
     //REQUIRES: front and back side are non-empty strings,
     //EFFECTS: creates a flashcard with a front and back side
-    public FlashCard(String initFront, String initBack) {
+    public FlashCard(String initFront, String initBack, boolean isFrontShowing) {
         this.frontSide = initFront;
         this.backSide = initBack;
-        isFrontShowing = true;
+        this.isFrontShowing = isFrontShowing;
     }
 
     //REQUIRES: non-empty string
@@ -47,5 +50,15 @@ public class FlashCard {
     //EFFECTS: returns true if card is front side is showing
     public Boolean getIsFrontShowing() {
         return isFrontShowing;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("frontSide", frontSide);
+        json.put("backSide", backSide);
+        json.put("isFrontShowing", isFrontShowing);
+
+        return json;
     }
 }

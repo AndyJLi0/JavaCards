@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Class for representing a deck of flash cards
-public class CardDeck {
+public class CardDeck implements Writable {
     private String cardDeckName;
     private final ArrayList<FlashCard> flashCardList;
 
@@ -69,5 +73,23 @@ public class CardDeck {
     //EFFECTS: returns card deck name
     public String getCardDeckName() {
         return cardDeckName;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("cardDeckName", cardDeckName);
+        json.put("flashCards", flashCardsToJson());
+        return json;
+    }
+
+    //EFFECTS: returns flashCards in deck as a JSON array
+    private JSONArray flashCardsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (FlashCard flashCard : flashCardList) {
+            jsonArray.put(flashCard.toJson());
+        }
+        return jsonArray;
     }
 }

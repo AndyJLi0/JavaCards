@@ -1,0 +1,28 @@
+{
+    "decksTitle": "myDecks",
+    "cardDecks": [
+        {
+            "flashCards": [
+                {
+                    "isFrontShowing": true,
+                    "backSide": "back1",
+                    "frontSide": "front1"
+                },
+                {
+                    "isFrontShowing": true,
+                    "backSide": "back2",
+                    "frontSide": "front2"
+                }
+            ],
+            "cardDeckName": "deck1"
+        },
+        {
+            "flashCards": [{
+                "isFrontShowing": true,
+                "backSide": "back3",
+                "frontSide": "front3"
+            }],
+            "cardDeckName": "deck2"
+        }
+    ]
+}

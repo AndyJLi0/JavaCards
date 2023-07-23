@@ -9,7 +9,7 @@ public class FlashCardTest {
     FlashCard testCard;
     @BeforeEach
     void setup() {
-        testCard = new FlashCard("Where is UBC?", "Vancouver");
+        testCard = new FlashCard("Where is UBC?", "Vancouver", true);
 
     }
     @Test

@@ -227,7 +227,7 @@ public class FlashCardsApp {
         String front = flashCardPageScanner.nextLine();
         System.out.println("Set the back side of the card:");
         String back = flashCardPageScanner.nextLine();
-        current.addCard(new FlashCard(front, back));
+        current.addCard(new FlashCard(front, back, true));
         System.out.println("all done! Add another one? (Y/N) ");
         String choice = flashCardPageScanner.nextLine();
         if (choice.equals("Y")) {
@@ -266,8 +266,6 @@ public class FlashCardsApp {
         if (wantShuffle.equals("Y")) {
             deck.shuffleDeck();
         }
-
-        deck.shuffleDeck();
         for (FlashCard flashCard : deck.getFlashCardList()) {
             flashCard.setIsFrontShowing(setCard);
             if (flashCard.getIsFrontShowing()) {  //front side first
