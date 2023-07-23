@@ -14,7 +14,10 @@ of today's popular flashcard apps are either online and require paid subscriptio
 complicated interfaces and are tough for new users to use. Learning and memorizing doesn't have to
 be hard, and I hope my app helps with it.
 
-## User Stories
+### Citations
+- Data Persistence in this program is based off UBC's CPSC 210 edX phase 2 Workroom Example
+
+### User Stories
 - As a user, I want to be able to add card decks to my set of decks
 - As a user, I want to be able to add flashcards to a card deck
 - As a user, I want to be able to edit card decks

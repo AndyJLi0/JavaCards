@@ -1,13 +1,21 @@
 package ui;
 
 import model.*;
+import org.json.JSONTokener;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 
 //Console based version of application
 public class FlashCardsApp {
+    private static final String JSON_STORE = "./data/myDecks.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private Decks myDecks;
     private static final String[] MENU_COMMANDS = {"Decks", "Learn More", "Quit"};
     private static final String[] DECKS_COMMANDS = {"View Deck", "Main Menu", "New Deck", "Remove Deck", "Rename Deck"};
@@ -18,12 +26,32 @@ public class FlashCardsApp {
         start();
     }
 
-    //EFFECTS: Begins to run the application
+    //EFFECTS: Begins to run the application; option to load data
     private void start() {
+        Scanner startScanner = new Scanner(System.in);
         myDecks = new Decks("myDecks");
-        System.out.println("Welcome to JavaCards! Start by typing a command below!");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        System.out.println("Welcome to JavaCards! Load Previous Data? (Y/N)");
+        String choice = startScanner.nextLine();
+        if (choice.equals("Y")) {
+            loadDecks();
+            menu();
+        }
         menu();
     }
+
+    //MODIFIES: this
+    //EFFECTS: loads the decks from file
+    private void loadDecks() {
+        try {
+            myDecks = jsonReader.read();
+            System.out.println("loaded successfully!");
+        } catch (IOException e) {
+            System.out.println("unable to read from file: " + JSON_STORE);
+        }
+    }
+
 
     //EFFECTS: controls the main menu (go to deck or help)
     @SuppressWarnings({"checkstyle:SuppressWarnings", "checkstyle:MethodLength"})
@@ -45,7 +73,7 @@ public class FlashCardsApp {
                     printReadMe();
                     break;
                 case "Quit":
-                    System.out.println("Bye Bye!");
+                    quit();
                     break;
                 default:
                     System.out.println("Invalid command. Type \"Help\" for available commands.");
@@ -53,6 +81,27 @@ public class FlashCardsApp {
             }
         }
         menuScanner.close();
+    }
+
+    private void quit() {
+        Scanner quitScanner = new Scanner(System.in);
+        System.out.println("Want to save before you go? (Y/N)");
+        String choice = quitScanner.nextLine();
+        if (choice.equals("Y")) {
+            saveDecks();
+        }
+        System.out.println("Bye Bye!");
+    }
+
+    private void saveDecks() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(myDecks);
+            jsonWriter.close();
+            System.out.println("Saved successfully!");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
     //EFFECTS:controls the decks menu and handles decks options
