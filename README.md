@@ -1,8 +1,8 @@
 # My Personal Project
 
-## SmartCards, a Flashcard Application
+## JavaCards, a Flashcard Application
 
-**SmartCards** is a java based desktop app designed to make and use flashcards. There's no limit
+**JavaCards** is a java based desktop app designed to make and use flashcards. There's no limit
 to how many card decks you can make and how many cards in a deck itself. When reviewing, you can 
 choose to view the front or the back of the card first, tailoring to your own study. My app is 
 intended to be used by university or college students that want an organized, and self-tailored

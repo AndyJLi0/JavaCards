@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+//Represents a reader that read JSON representation of Decks to file
 public class JsonReader {
 
     private String source;

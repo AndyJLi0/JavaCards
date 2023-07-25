@@ -83,6 +83,7 @@ public class FlashCardsApp {
         menuScanner.close();
     }
 
+    //EFFECTS: handles user quitting and saving
     private void quit() {
         Scanner quitScanner = new Scanner(System.in);
         System.out.println("Want to save before you go? (Y/N)");
@@ -93,6 +94,7 @@ public class FlashCardsApp {
         System.out.println("Bye Bye!");
     }
 
+    //EFFECTS: attempts to write the data to file
     private void saveDecks() {
         try {
             jsonWriter.open();
