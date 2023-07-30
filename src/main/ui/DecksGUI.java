@@ -1,7 +1,9 @@
 package ui;
 
+import javax.swing.*;
+
 // GUI for the decks page, displays all decks and names; option to remove, rename, add
-public class DecksGUI {
+public class DecksGUI extends JPanel {
 
     // EFFECTS: constructs a DECKS GUI
     public DecksGUI() {
