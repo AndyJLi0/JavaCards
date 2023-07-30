@@ -18,8 +18,8 @@ public class FlashCardsAppGUI {
     private JFrame frame;
     private DecksGUI decksPanel;
     private MainMenuGUI mainMenuPanel;
-    private CardLayout cardLayout;
-    private Decks myDecks;
+    protected static CardLayout cardLayout;
+    protected static Decks myDecks;
     private static final String JSON_STORE = "./data/myDecks.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -28,7 +28,7 @@ public class FlashCardsAppGUI {
     public FlashCardsAppGUI() {
         myDecks = new Decks("myDecks");
         mainMenuPanel = new MainMenuGUI();
-        decksPanel = new DecksGUI();
+        decksPanel = new DecksGUI(myDecks);
         cardLayout = new CardLayout();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
