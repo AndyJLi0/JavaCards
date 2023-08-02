@@ -1,7 +1,6 @@
 package ui;
 
 import model.Decks;
-import model.FlashCard;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -16,9 +15,11 @@ import java.io.IOException;
 public class FlashCardsAppGUI {
 
     private JFrame frame;
-    private DecksGUI decksPanel;
-    private MainMenuGUI mainMenuPanel;
+    protected DecksGUI decksGUI;
+    protected static MainMenuGUI mainMenuPanel;
+    protected static CardDeckGUI cardDeckPanel;
     protected static CardLayout cardLayout;
+
     protected static Decks myDecks;
     private static final String JSON_STORE = "./data/myDecks.json";
     private JsonWriter jsonWriter;
@@ -28,7 +29,8 @@ public class FlashCardsAppGUI {
     public FlashCardsAppGUI() {
         myDecks = new Decks("myDecks");
         mainMenuPanel = new MainMenuGUI();
-        decksPanel = new DecksGUI(myDecks);
+        decksGUI = new DecksGUI();
+        cardDeckPanel = new CardDeckGUI();
         cardLayout = new CardLayout();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -38,8 +40,9 @@ public class FlashCardsAppGUI {
     // MODIFIES: this
     // EFFECTS: sets initial application and pop-up
     public void initSetup() {
+        frame = new JFrame();
         initFrame();
-        initPopup();
+        //initPopup();
     }
 
     // MODIFIES: this
@@ -59,11 +62,11 @@ public class FlashCardsAppGUI {
     // MODIFIES: this
     // EFFECTS: sets up the initial frame for the GUI
     private void initFrame() {
-        frame = new JFrame();
         frame.setTitle("JavaCards");
         frame.getContentPane().setLayout(cardLayout);
-        frame.getContentPane().add(decksPanel, "Decks");
+        frame.getContentPane().add(decksGUI, "Decks");
         frame.getContentPane().add(mainMenuPanel, "MainMenu");
+        frame.getContentPane().add(cardDeckPanel, "CardDeck");
         cardLayout.show(frame.getContentPane(), "MainMenu");
         frame.addWindowListener(new WindowAdapter() {
             @Override

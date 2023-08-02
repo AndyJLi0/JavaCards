@@ -29,6 +29,10 @@ public class Decks implements Writable {
         deckList.remove(index);
     }
 
+    public void removeDeckFromDecks(CardDeck deck) {
+        deckList.remove(deck);
+    }
+
     //EFFECTS: returns the of given index, assume that index is within bounds
     //         (assumed index valid from user handling)
     public CardDeck fetchDeckFromDecks(int index) {
@@ -43,6 +47,26 @@ public class Decks implements Writable {
     //EFFECTS: returns the list of all the decks
     public ArrayList<CardDeck> getDeckList() {
         return deckList;
+    }
+
+    // EFFECTS: returns a list of the deck names in the decklist
+    public ArrayList<String> getDeckNamesFromDecks() {
+        ArrayList<String> names = new ArrayList<>();
+        for (CardDeck cardDeck : deckList) {
+            names.add(cardDeck.getCardDeckName());
+        }
+        return names;
+    }
+
+    // REQUIRES: deck with given name to be in the deck list
+    // EFFECTS: returns the deck with given name
+    public CardDeck getCardDeckFromName(String name) {
+        for (CardDeck deck : deckList) {
+            if (name == deck.getCardDeckName()) {
+                return deck;
+            }
+        }
+        return null;
     }
 
     @Override
