@@ -4,10 +4,12 @@ import model.Decks;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -41,6 +43,11 @@ public class FlashCardsAppGUI {
     // EFFECTS: sets initial application and pop-up
     public void initSetup() {
         frame = new JFrame();
+        try {
+            frame.setIconImage(ImageIO.read(new File("./data/images/flashCardAppIcon.png")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         initFrame();
         //initPopup();
     }

@@ -69,6 +69,13 @@ public class Decks implements Writable {
         return null;
     }
 
+    // REQUIRES: deck with given name to be in the deck list
+    // EFFECTS: returns the index of the deck
+    public Integer getIndexFromName(String name) {
+        return deckList.indexOf(this.getCardDeckFromName(name));
+    }
+
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

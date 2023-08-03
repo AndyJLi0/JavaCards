@@ -60,6 +60,24 @@ public class CardDeck implements Writable {
         return flashCardList;
     }
 
+    // EFFECTS: returns list of all flashCard front sides
+    public ArrayList<String> getFlashCardListFront() {
+        ArrayList<String> allFrontShowing = new ArrayList<>();
+        for (FlashCard fc : flashCardList) {
+            allFrontShowing.add(fc.getFrontSide());
+        }
+        return allFrontShowing;
+    }
+
+    // EFFECTS: returns list of all flashCard back sides
+    public ArrayList<String> getFlashCardListBack() {
+        ArrayList<String> allBackShowing = new ArrayList<>();
+        for (FlashCard fc : flashCardList) {
+            allBackShowing.add(fc.getBackSide());
+        }
+        return allBackShowing;
+    }
+
     //EFFECTS: returns the flashcard given the index
     public FlashCard getFlashCard(int index) {
         return flashCardList.get(index);
