@@ -26,6 +26,7 @@ public class FlashCardsAppGUI {
     private static final String JSON_STORE = "./data/myDecks.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    protected static Boolean isDataLoaded;
 
     //EFFECTS: creates a new GUI
     public FlashCardsAppGUI() {
@@ -36,6 +37,7 @@ public class FlashCardsAppGUI {
         cardLayout = new CardLayout();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        isDataLoaded = false;
         initSetup();
     }
 
@@ -63,6 +65,7 @@ public class FlashCardsAppGUI {
 
         if (response == JOptionPane.YES_OPTION) {
             loadData();
+            isDataLoaded = true;
         }
     }
 

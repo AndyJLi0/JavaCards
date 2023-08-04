@@ -30,6 +30,12 @@ public class CardDeck implements Writable {
         flashCardList.remove(card);
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes given card from card deck; implicit assumption of card existing
+    public void removeCard(FlashCard card) {
+        flashCardList.remove(card);
+    }
+
     //MODIFIES: this
     //EFFECTS: renames the flashcard deck name
     public void renameCardDeck(String name) {
@@ -109,5 +115,26 @@ public class CardDeck implements Writable {
             jsonArray.put(flashCard.toJson());
         }
         return jsonArray;
+    }
+
+
+    // EFFECTS: returns the flashcard given the backside of text, null if it doesn't exist
+    public FlashCard getFlashCardByBack(String flashCardText) {
+        for (FlashCard fc: flashCardList) {
+            if (flashCardText == fc.getBackSide()) {
+                return fc;
+            }
+        }
+        return null;
+    }
+
+    // EFFECTS: returns the flashcard given the front-side of text, null if it doesn't exist
+    public FlashCard getFlashCardByFront(String flashCardText) {
+        for (FlashCard fc: flashCardList) {
+            if (flashCardText == fc.getFrontSide()) {
+                return fc;
+            }
+        }
+        return null;
     }
 }

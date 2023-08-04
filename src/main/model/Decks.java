@@ -62,7 +62,7 @@ public class Decks implements Writable {
     // EFFECTS: returns the deck with given name
     public CardDeck getCardDeckFromName(String name) {
         for (CardDeck deck : deckList) {
-            if (name == deck.getCardDeckName()) {
+            if (name.equals(deck.getCardDeckName())) {
                 return deck;
             }
         }

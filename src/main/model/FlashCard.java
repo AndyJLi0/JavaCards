@@ -3,6 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.util.Objects;
+
 // Class for representing a single flash card
 public class FlashCard implements Writable {
     private String frontSide;
@@ -61,4 +63,23 @@ public class FlashCard implements Writable {
 
         return json;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o != null && getClass() == o.getClass()) {
+            FlashCard flashCard = (FlashCard) o;
+            return Objects.equals(frontSide, flashCard.frontSide) && Objects.equals(backSide, flashCard.backSide);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frontSide, backSide);
+    }
+
 }

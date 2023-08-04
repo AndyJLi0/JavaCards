@@ -57,6 +57,9 @@ public class MainMenuGUI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame frame = (JFrame) this.getRootPane().getParent();
+        if (FlashCardsAppGUI.isDataLoaded) {
+            DecksGUI.refreshDecksForLoad();
+        }
         FlashCardsAppGUI.cardLayout.show(frame.getContentPane(), "Decks");
     }
 }

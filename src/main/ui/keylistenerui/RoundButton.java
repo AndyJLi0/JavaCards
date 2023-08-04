@@ -2,16 +2,19 @@ package ui.keylistenerui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 // a rounded button that extends the features of JButton
 public class RoundButton extends JButton {
     private int arcWidth = 20;
     private int arcHeight = 20;
+    private String label;
     protected static Font FONT = new Font("Arial", Font.PLAIN, 14);
 
     // EFFECTS: constructs the rounded button
     public RoundButton(String label) {
         super(label);
+        this.label = label;
         setFocusable(false);
         setContentAreaFilled(false);
         setFocusPainted(false);
@@ -44,5 +47,19 @@ public class RoundButton extends JButton {
         g2d.setColor(getForeground());
         g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
         g2d.dispose();
+    }
+
+    @SuppressWarnings({"checkstyle:NeedBraces", "checkstyle:SuppressWarnings"})
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoundButton that = (RoundButton) o;
+        return Objects.equals(label, that.label);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(label);
     }
 }

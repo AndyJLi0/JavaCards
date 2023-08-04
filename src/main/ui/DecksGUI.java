@@ -1,8 +1,10 @@
 package ui;
 
 import model.CardDeck;
+import ui.keylistenerui.JListUI;
 import ui.keylistenerui.RoundButton;
 import ui.keylistenerui.RoundComboBoxUI;
+import ui.keylistenerui.RoundedBorder;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,13 +15,14 @@ import java.util.ArrayList;
 
 // GUI for the decks page, displays all decks and names; option to remove, rename, add
 public class DecksGUI extends JPanel implements ActionListener {
+    private static DefaultListModel<String> deckNameListModel;
     private JButton mainMenuButton;
     private JButton newDeckButton;
     private JButton removeDeckButton;
     private JButton renameDeckButton;
     private JButton viewDeckButton;
     private JLabel titleLabel;
-    private JComboBox<String> deckDropDown;
+    private static JList<String> displayOfDecks;
 
     // EFFECTS: constructs a DECKS GUI
     public DecksGUI() {
@@ -29,7 +32,7 @@ public class DecksGUI extends JPanel implements ActionListener {
         this.setBackground(Color.white);
 
         setupTitle();
-        setupDeckDropDown();
+        setupDisplayOfDecks();
         setupButtons();
         setupPage();
     }
@@ -61,14 +64,22 @@ public class DecksGUI extends JPanel implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: sets up the deck combo box
-    private void setupDeckDropDown() {
+    private void setupDisplayOfDecks() {
         ArrayList<String> deckNames = FlashCardsAppGUI.myDecks.getDeckNamesFromDecks();
-        deckDropDown = new JComboBox<>(deckNames.toArray(new String[0]));
-        deckDropDown.setUI(new RoundComboBoxUI());
-        deckDropDown.setFont(new Font("Arial", Font.PLAIN, 14));
-        deckDropDown.setBounds(50, 50, 90, 20);
-        deckDropDown.setMaximumSize(new Dimension(Integer.MAX_VALUE, deckDropDown.getPreferredSize().height));
-        deckDropDown.setPreferredSize(new Dimension(100, deckDropDown.getPreferredSize().height));
+
+        deckNameListModel = new DefaultListModel<>();
+        for (String name : deckNames) {
+            deckNameListModel.addElement(name);
+        }
+        displayOfDecks = new JListUI(deckNameListModel);
+    }
+
+    public static void refreshDecksForLoad() {
+        ArrayList<String> deckNames = FlashCardsAppGUI.myDecks.getDeckNamesFromDecks();
+
+        for (String name : deckNames) {
+            deckNameListModel.addElement(name);
+        }
     }
 
     // MODIFIES: this
@@ -78,16 +89,48 @@ public class DecksGUI extends JPanel implements ActionListener {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
         titleLabel.setForeground(new Color(3, 140, 250));
         titleLabel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.add(titleLabel, BorderLayout.NORTH);
     }
 
 
     // MODIFIES: this
     // EFFECTS: sets up the decks page
     private void setupPage() {
+        renderRightSideButtons();
+        renderMainMenuButton();
+        renderScrollPane();
+    }
+
+    private void renderMainMenuButton() {
+        JPanel mainMenuButtonPanel = new JPanel();
+        mainMenuButtonPanel.setOpaque(false);
+        mainMenuButtonPanel.setBorder(new EmptyBorder(15, 25, 10, 25));
+        mainMenuButtonPanel.add(mainMenuButton);
+        renderScrollPane();
+        this.add(mainMenuButtonPanel, BorderLayout.WEST);
+    }
+
+    private void renderScrollPane() {
+        JScrollPane scrollPane = new JScrollPane(displayOfDecks);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setPreferredSize(new Dimension(100,120));
+        scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
+        scrollPane.setBorder(new RoundedBorder(10));
+
+        JPanel scrollPanePanel = new JPanel();
+        scrollPanePanel.setOpaque(false);
+        scrollPanePanel.setLayout(new BoxLayout(scrollPanePanel, BoxLayout.PAGE_AXIS));
+        scrollPanePanel.add(scrollPane);
+
+        this.add(scrollPanePanel, BorderLayout.CENTER);
+    }
+
+    private void renderRightSideButtons() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false);
-        buttonPanel.setBorder(new EmptyBorder(15, 20, 10, 40));
+        buttonPanel.setBorder(new EmptyBorder(15, 25, 10, 25));
         buttonPanel.add(newDeckButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(viewDeckButton);
@@ -95,21 +138,7 @@ public class DecksGUI extends JPanel implements ActionListener {
         buttonPanel.add(renameDeckButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(removeDeckButton);
-
-        JPanel mainMenuButtonPanel = new JPanel();
-        mainMenuButtonPanel.setOpaque(false);
-        mainMenuButtonPanel.setBorder(new EmptyBorder(15, 40, 10, 20));
-        mainMenuButtonPanel.add(mainMenuButton);
-
-        JPanel deckDropDownPanel = new JPanel();
-        deckDropDownPanel.setOpaque(false);
-        deckDropDownPanel.setBorder(new EmptyBorder(15, 0, 10, 0));
-        deckDropDownPanel.add(deckDropDown);
-
-        this.add(titleLabel, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.EAST);
-        this.add(mainMenuButtonPanel, BorderLayout.WEST);
-        this.add(deckDropDownPanel, BorderLayout.CENTER);
     }
 
     // MODIFIES: this
@@ -119,8 +148,9 @@ public class DecksGUI extends JPanel implements ActionListener {
         String deckName = JOptionPane.showInputDialog(frame, "Enter the deck name:");
         if (deckName != null && !deckName.trim().isEmpty()) {
             CardDeck newDeck = new CardDeck(deckName);
+
             FlashCardsAppGUI.myDecks.addDeckToDecks(newDeck);
-            deckDropDown.addItem(deckName);
+            deckNameListModel.addElement(deckName);
         }
     }
 
@@ -128,8 +158,9 @@ public class DecksGUI extends JPanel implements ActionListener {
     // MODIFIES: this
     // EFFECTS: removes a selected deck
     private void removeDeck(CardDeck deck) {
+
         FlashCardsAppGUI.myDecks.removeDeckFromDecks(deck);
-        this.refreshDropDown();
+        deckNameListModel.removeElement(deck);
     }
 
     // MODIFIES: this
@@ -139,36 +170,29 @@ public class DecksGUI extends JPanel implements ActionListener {
         String deckName = JOptionPane.showInputDialog(frame, "Rename deck to:");
         // Check if the user clicked "OK" (i.e., deckName is not null) and the input is not empty
         if (deckName != null && !deckName.trim().isEmpty()) {
+            deckNameListModel.removeElement(deck.getCardDeckName());
             deck.renameCardDeck(deckName);
+            deckNameListModel.addElement(deckName);
         }
-        this.refreshDropDown();
     }
 
-    // MODIFIES: this
-    // EFFECTS: removes then displays again the decks after action performed
-    private void refreshDropDown() {
-        deckDropDown.removeAllItems();
-        for (CardDeck cardDeck : FlashCardsAppGUI.myDecks.getDeckList()) {
-            deckDropDown.addItem(cardDeck.getCardDeckName());
-        }
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame frame = (JFrame) this.getRootPane().getParent();
-        String cardDeckName = (String) deckDropDown.getSelectedItem();
+        String cardDeckName = displayOfDecks.getSelectedValue();
         CardDeck selectedDeck = FlashCardsAppGUI.myDecks.getCardDeckFromName(cardDeckName);
         if (e.getSource() == mainMenuButton) {
             FlashCardsAppGUI.cardLayout.show(frame.getContentPane(), "MainMenu");
-        } else if (e.getSource() == newDeckButton) {
+        } else if (e.getSource().equals(newDeckButton)) {
             createNewDeck();
         } else if (selectedDeck != null) {
-            if (e.getSource() == removeDeckButton) {
+            if (e.getSource().equals(removeDeckButton)) {
                 removeDeck(selectedDeck);
-            } else if (e.getSource() == renameDeckButton) {
+            } else if (e.getSource().equals(renameDeckButton)) {
                 renameDeck(selectedDeck);
-            } else if (e.getSource() == viewDeckButton) {
-                //TOdo: MAYBE IMPLEMENT EXCEPTION
+            } else if (e.getSource().equals(viewDeckButton)) {
+                System.out.println("bruh");
                 FlashCardsAppGUI.cardDeckPanel.initGUI(selectedDeck);
                 FlashCardsAppGUI.cardLayout.show(frame.getContentPane(), "CardDeck");
             }
