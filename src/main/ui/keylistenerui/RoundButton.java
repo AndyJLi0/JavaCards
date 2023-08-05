@@ -6,9 +6,9 @@ import java.util.Objects;
 
 // a rounded button that extends the features of JButton
 public class RoundButton extends JButton {
-    private int arcWidth = 20;
-    private int arcHeight = 20;
-    private String label;
+    private final int arcWidth = 20;
+    private final int arcHeight = 20;
+    private final String label;
     protected static Font FONT = new Font("Arial", Font.PLAIN, 14);
 
     // EFFECTS: constructs the rounded button
@@ -49,11 +49,14 @@ public class RoundButton extends JButton {
         g2d.dispose();
     }
 
-    @SuppressWarnings({"checkstyle:NeedBraces", "checkstyle:SuppressWarnings"})
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         RoundButton that = (RoundButton) o;
         return Objects.equals(label, that.label);
     }

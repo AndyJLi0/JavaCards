@@ -3,9 +3,11 @@ package ui.keylistenerui;
 import javax.swing.border.Border;
 import java.awt.*;
 
+// class that makes the border round, specifically for JList and JScrollPane
 public class RoundedBorder implements Border {
     private int radius;
 
+    // EFFECTS: sets how 'rounded' the border is
     public RoundedBorder(int radius) {
         this.radius = radius;
     }

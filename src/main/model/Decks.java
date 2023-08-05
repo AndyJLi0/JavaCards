@@ -29,6 +29,8 @@ public class Decks implements Writable {
         deckList.remove(index);
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes given deck from deck list 
     public void removeDeckFromDecks(CardDeck deck) {
         deckList.remove(deck);
     }
@@ -61,20 +63,15 @@ public class Decks implements Writable {
     // REQUIRES: deck with given name to be in the deck list
     // EFFECTS: returns the deck with given name
     public CardDeck getCardDeckFromName(String name) {
-        for (CardDeck deck : deckList) {
-            if (name.equals(deck.getCardDeckName())) {
-                return deck;
+        if (name != null) {
+            for (CardDeck deck : deckList) {
+                if (name.equals(deck.getCardDeckName())) {
+                    return deck;
+                }
             }
         }
         return null;
     }
-
-    // REQUIRES: deck with given name to be in the deck list
-    // EFFECTS: returns the index of the deck
-    public Integer getIndexFromName(String name) {
-        return deckList.indexOf(this.getCardDeckFromName(name));
-    }
-
 
     @Override
     public JSONObject toJson() {

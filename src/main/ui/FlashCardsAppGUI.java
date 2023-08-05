@@ -13,27 +13,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-// GUI for the main portion of the application
+// Class for frame and underlying structure of app
 public class FlashCardsAppGUI {
 
     private JFrame frame;
-    protected DecksGUI decksGUI;
+    protected DecksGUI decksPanel;
     protected static MainMenuGUI mainMenuPanel;
     protected static CardDeckGUI cardDeckPanel;
+    protected static PracticeGUI practicePanel;
     protected static CardLayout cardLayout;
 
     protected static Decks myDecks;
     private static final String JSON_STORE = "./data/myDecks.json";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
     protected static Boolean isDataLoaded;
 
     //EFFECTS: creates a new GUI
     public FlashCardsAppGUI() {
         myDecks = new Decks("myDecks");
         mainMenuPanel = new MainMenuGUI();
-        decksGUI = new DecksGUI();
+        decksPanel = new DecksGUI();
         cardDeckPanel = new CardDeckGUI();
+        practicePanel = new PracticeGUI();
         cardLayout = new CardLayout();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -45,23 +47,28 @@ public class FlashCardsAppGUI {
     // EFFECTS: sets initial application and pop-up
     public void initSetup() {
         frame = new JFrame();
+        frame.setTitle("JavaCards");
         try {
             frame.setIconImage(ImageIO.read(new File("./data/images/flashCardAppIcon.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         initFrame();
-        //initPopup();
+        initPopup();
     }
 
     // MODIFIES: this
     // EFFECTS: asks if user wants to load previous data
     private void initPopup() {
+        ImageIcon originalIcon = new ImageIcon("./data/images/colouredFlashCard.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(scaledImage);
         int response = JOptionPane.showConfirmDialog(frame,
                 "Do you want to load your previous data?",
                 "Load Data",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.QUESTION_MESSAGE,
+                icon);
 
         if (response == JOptionPane.YES_OPTION) {
             loadData();
@@ -72,12 +79,11 @@ public class FlashCardsAppGUI {
     // MODIFIES: this
     // EFFECTS: sets up the initial frame for the GUI
     private void initFrame() {
-        frame.setTitle("JavaCards");
-        frame.getContentPane().setLayout(cardLayout);
-        frame.getContentPane().add(decksGUI, "Decks");
-        frame.getContentPane().add(mainMenuPanel, "MainMenu");
-        frame.getContentPane().add(cardDeckPanel, "CardDeck");
-        cardLayout.show(frame.getContentPane(), "MainMenu");
+        addAllCards();
+
+        ImageIcon originalIcon = new ImageIcon("./data/images/saveIcon.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(scaledImage);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -85,13 +91,25 @@ public class FlashCardsAppGUI {
                         "Do you want to save your data before exiting?",
                         "Exit",
                         JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
+                        JOptionPane.QUESTION_MESSAGE,
+                        icon);
                 if (response == JOptionPane.YES_OPTION) {
                     saveData();
                 }
                 frame.dispose();
             }
         });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds all panels to the card layout
+    private void addAllCards() {
+        frame.getContentPane().setLayout(cardLayout);
+        frame.getContentPane().add(decksPanel, "Decks");
+        frame.getContentPane().add(mainMenuPanel, "MainMenu");
+        frame.getContentPane().add(cardDeckPanel, "CardDeck");
+        frame.getContentPane().add(practicePanel,"Practice");
+        cardLayout.show(frame.getContentPane(), "MainMenu");
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -102,9 +120,8 @@ public class FlashCardsAppGUI {
     private void loadData() {
         try {
             myDecks = jsonReader.read();
-            System.out.println("loaded successfully!");
         } catch (IOException e) {
-            System.out.println("unable to read from file: " + JSON_STORE);
+            // pass without loading anything
         }
     }
 
@@ -115,9 +132,9 @@ public class FlashCardsAppGUI {
             jsonWriter.open();
             jsonWriter.write(myDecks);
             jsonWriter.close();
-            System.out.println("Saved successfully!");
+
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            // exit without saving
         }
     }
 }

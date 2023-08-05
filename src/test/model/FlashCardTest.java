@@ -49,4 +49,16 @@ public class FlashCardTest {
         assertEquals("Is my name Andy?", testCard.getFrontSide());
         assertEquals("Yes" , testCard.getBackSide());
     }
+
+    @Test
+    void equalsAndHashCodeTest() {
+        FlashCard testCard2 = new FlashCard("Where is UBC?", "Vancouver", false);
+        FlashCard testCard3 = new FlashCard("Where is UBC?", "Point Grey", false);
+        assertEquals(testCard, testCard2);
+        assertTrue(!testCard.equals(testCard3));
+        assertNotSame(testCard, testCard2);
+        assertEquals(testCard.hashCode(),testCard2.hashCode());
+
+        assertNotEquals(testCard.hashCode(),testCard3.hashCode());
+    }
 }

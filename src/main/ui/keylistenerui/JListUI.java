@@ -3,14 +3,18 @@ package ui.keylistenerui;
 import javax.swing.*;
 import java.awt.*;
 
+// Class to construct a nice looking JList
 public class JListUI extends JList {
 
+    // EFFECTS: creates the JList with the given ListModel
     public JListUI(DefaultListModel<String> listModel) {
         super(listModel);
         initJListUI();
         setCustomCellRenderer();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets JList properties
     private void initJListUI() {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setLayoutOrientation(JList.VERTICAL);
@@ -21,6 +25,8 @@ public class JListUI extends JList {
         setForeground((new Color(30, 140, 250)));
     }
 
+    // MODIFIES: this
+    // EFFECTS: customizes the highlight colour of the selected JList element
     private void setCustomCellRenderer() {
         this.setCellRenderer(new DefaultListCellRenderer() {
             @Override

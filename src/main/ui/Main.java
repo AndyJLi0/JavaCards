@@ -6,6 +6,4 @@ public class Main {
         //new FlashCardsApp();
         new FlashCardsAppGUI();
     }
-
-
 }

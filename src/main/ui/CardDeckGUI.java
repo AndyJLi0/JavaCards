@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class CardDeckGUI extends JPanel implements ActionListener, ItemListener {
     private static DefaultListModel<String> flashCardNamesListModel;
     protected CardDeck deckForPage;
-    private JLabel title;
+    private final JLabel title;
     private JButton backToDecksButton;
     private JButton practiceButton;
     private SwitchButton displayBackWhenOn;
@@ -68,7 +68,7 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
 
         JScrollPane scrollPane = new JScrollPane(displayOfFlashCards);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize(new Dimension(100, 120));
+        scrollPane.setPreferredSize(new Dimension(120, 120));
         scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
         scrollPane.setBorder(new RoundedBorder(10));
 
@@ -87,14 +87,11 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         backToDecksButton = makeButton("Decks");
         practiceButton = makeButton("Practice");
         displayBackWhenOn = new SwitchButton();
-        displayBackWhenOn.addEventSelected(new EventSwitchSelected() {
-            @Override
-            public void onSelected(boolean selected) {
-                if (selected) {
-                    updateFlashCardsDisplayWithBack();
-                } else {
-                    updateFlashCardsDisplayWithFront();
-                }
+        displayBackWhenOn.addEventSelected(selected -> {
+            if (selected) {
+                updateFlashCardsDisplayWithBack();
+            } else {
+                updateFlashCardsDisplayWithFront();
             }
         });
         newFlashCardButton = makeButton("Create");
@@ -110,14 +107,20 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         JPanel rightSideButtons = new JPanel();
         rightSideButtons.setLayout(new BoxLayout(rightSideButtons, BoxLayout.Y_AXIS));
         rightSideButtons.setOpaque(false);
-        rightSideButtons.setBorder(new EmptyBorder(15, 20, 10, 40));
+        rightSideButtons.setBorder(new EmptyBorder(15, 20, 10, 20));
         rightSideButtons.add(newFlashCardButton);
+        newFlashCardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newFlashCardButton.setMargin(new Insets(2, 19, 2, 19));
         rightSideButtons.add(Box.createRigidArea(new Dimension(0, 10)));
         rightSideButtons.add(editFlashCardButton);
+        editFlashCardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        editFlashCardButton.setMargin(new Insets(2, 26, 2, 26));
         rightSideButtons.add(Box.createRigidArea(new Dimension(0, 10)));
         rightSideButtons.add(removeFlashCardButton);
+        removeFlashCardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         rightSideButtons.add(Box.createRigidArea(new Dimension(0, 10)));
         rightSideButtons.add(practiceButton);
+        practiceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(rightSideButtons, BorderLayout.EAST);
     }
 
@@ -128,7 +131,7 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         JPanel leftSideButtons = new JPanel();
         leftSideButtons.setLayout(new BoxLayout(leftSideButtons, BoxLayout.Y_AXIS));
         leftSideButtons.setOpaque(false);
-        leftSideButtons.setBorder(new EmptyBorder(15, 40, 10, 20));
+        leftSideButtons.setBorder(new EmptyBorder(15, 20, 10, 20));
         leftSideButtons.add(backToDecksButton);
         leftSideButtons.add(Box.createRigidArea(new Dimension(0, 10)));
         JLabel toggleTheSideShowing = new JLabel("SHOW BACK: ");
@@ -151,7 +154,8 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         return newFlashCardButton;
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: sets up the title of the GUI
     private void setTitle() {
         title.setFont(new Font("Arial", Font.BOLD, 30));
         title.setForeground(new Color(3, 140, 250));
@@ -167,12 +171,14 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         JFrame frame = (JFrame) this.getRootPane().getParent();
         JTextField frontSideField = new JTextField();
         JTextField backSideField = new JTextField();
-        Object[] message = {
-                "Enter front side text:", frontSideField,
-                "Enter back side text:", backSideField
-        };
+        Object[] message = {"Enter front side text:", frontSideField, "Enter back side text:", backSideField};
 
-        int option = JOptionPane.showConfirmDialog(frame, message, "New FlashCard!!", JOptionPane.OK_CANCEL_OPTION);
+        ImageIcon originalIcon = new ImageIcon("./data/images/colouredFlashCard.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(scaledImage);
+
+        int option = JOptionPane.showConfirmDialog(frame, message,
+                "New FlashCard!!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon);
         if (option == JOptionPane.OK_OPTION) {
             String flashCardFront = frontSideField.getText();
             String flashCardBack = backSideField.getText();
@@ -199,15 +205,19 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
     // EFFECTS: edits selected flashcard, changing front and back
     private void editCard(FlashCard card) {
         JFrame frame = (JFrame) this.getRootPane().getParent();
+
         JTextField frontSideField = new JTextField();
         JTextField backSideField = new JTextField();
-        Object[] message = {
-                "Enter front side text:", frontSideField,
-                "Enter back side text:", backSideField
-        };
+        Object[] message = {"Enter front side text:", frontSideField, "Enter back side text:", backSideField};
+
+        ImageIcon originalIcon = new ImageIcon("./data/images/colouredFlashCard.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(scaledImage);
 
         int option = JOptionPane.showConfirmDialog(frame, message,
-                "Editing " + card.getFrontSide() + "--" + card.getBackSide(), JOptionPane.OK_CANCEL_OPTION);
+                "Editing " + card.getFrontSide() + "--" + card.getBackSide(),
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, icon);
+
         if (option == JOptionPane.OK_OPTION) {
             String flashCardFront = frontSideField.getText();
             String flashCardBack = backSideField.getText();
@@ -222,7 +232,7 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         }
     }
 
-    // Effects: handles the refresh choice of the dropdown
+    // Effects: handles the refresh choice of the list
     private void updateFlashCardsDisplay() {
         this.flashCardNames = deckForPage.getFlashCardListFront();
         flashCardNamesListModel.removeAllElements();
@@ -234,7 +244,7 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
     }
 
     // MODIFIES: this
-    // EFFECTS: refreshes drop down with front showing
+    // EFFECTS: refreshes list with front showing
     private void updateFlashCardsDisplayWithFront() {
         flashCardNamesListModel.removeAllElements();
         for (FlashCard fc : deckForPage.getFlashCardList()) {
@@ -244,7 +254,7 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
     }
 
     // MODIFIES: this
-    // EFFECTS: refreshes drop down with back showing
+    // EFFECTS: refreshes list with back showing
     private void updateFlashCardsDisplayWithBack() {
         flashCardNamesListModel.removeAllElements();
         for (FlashCard fc : deckForPage.getFlashCardList()) {
@@ -257,7 +267,6 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
     public void actionPerformed(ActionEvent e) {
         JFrame frame = (JFrame) this.getRootPane().getParent();
         String flashCardText = displayOfFlashCards.getSelectedValue();
-        System.out.println("3");
         FlashCard flashCard;
         if (displayBackWhenOn.isSelected()) {
             flashCard = deckForPage.getFlashCardByBack(flashCardText);
@@ -265,20 +274,17 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
             flashCard = deckForPage.getFlashCardByFront(flashCardText);
         }
         if (e.getSource().equals(backToDecksButton)) {
-            System.out.println("why the fuck");
             FlashCardsAppGUI.cardLayout.show(frame.getContentPane(), "Decks");
         } else if (e.getSource().equals(newFlashCardButton)) {
-            System.out.println("this one works");
             addCard();
         } else if (flashCard != null) {
-            System.out.println("bruh");
             if (e.getSource().equals(removeFlashCardButton)) {
-                System.out.println("does this run");
                 removeCard(flashCard);
             } else if (e.getSource().equals(editFlashCardButton)) {
                 editCard(flashCard);
             } else if (e.getSource().equals(practiceButton)) {
-                //todo: CREATE NEW PRACTICE FRAME!
+                FlashCardsAppGUI.practicePanel.whenCalled(deckForPage);
+                FlashCardsAppGUI.cardLayout.show(frame.getContentPane(), "Practice");
             }
         }
     }

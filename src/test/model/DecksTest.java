@@ -2,7 +2,10 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 //Test class for the Decks Class in the Model Package
 public class DecksTest {
@@ -40,8 +43,10 @@ public class DecksTest {
         assertEquals(1, decksTest.getDeckList().size());
         assertEquals(deck2, decksTest.getDeckList().get(0));
 
-
+        decksTest.removeDeckFromDecks(deck2);
+        assertEquals(0, decksTest.getDeckList().size());
     }
+
     @Test
     void fetchDeckFromDecksTest() {
         decksTest.addDeckToDecks(deck1);
@@ -50,5 +55,21 @@ public class DecksTest {
         assertEquals(deck1, decksTest.fetchDeckFromDecks(0));
         assertEquals(deck2, decksTest.fetchDeckFromDecks(1));
         assertEquals(deck3, decksTest.fetchDeckFromDecks(2));
+        assertEquals(deck1, decksTest.getCardDeckFromName("A"));
+        assertEquals(deck2, decksTest.getCardDeckFromName("B"));
+        assertNull(decksTest.getCardDeckFromName("C"));
     }
+
+    @Test
+    void getDeckNamesFromDecksTest() {
+        decksTest.addDeckToDecks(deck1);
+        decksTest.addDeckToDecks(deck2);
+        decksTest.addDeckToDecks(deck3);
+        assertEquals("A", decksTest.getDeckNamesFromDecks().get(0));
+        assertEquals("B", decksTest.getDeckNamesFromDecks().get(1));
+        assertEquals("B", decksTest.getDeckNamesFromDecks().get(2));
+
+
+    }
+
 }

@@ -1,32 +1,26 @@
 package ui.keylistenerui;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
+
+// class for constructing an animated toggle button
 public class SwitchButton extends Component {
 
-    private Timer timer;
+    private final Timer timer;
     private float location;
     private boolean selected;
     private boolean mouseOver;
-    private float speed = 0.1f;
-    private List<EventSwitchSelected> events;
+    private final float speed = 0.1f;
+    private final List<EventSwitchSelected> events;
 
-    //TODO: ADD SPECIFICATION
+    // EFFECTS: constructs a switch button with animation when pressed
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public SwitchButton() {
         setBackground(new Color(3, 140, 250));
@@ -87,19 +81,14 @@ public class SwitchButton extends Component {
         });
     }
 
+    // EFFECTS: returns true if the toggle is toggled on
     public boolean isSelected() {
         return selected;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-        timer.start();
-        runEvent();
-    }
-
     @Override
-    public void paint(Graphics grphcs) {
-        Graphics2D g2 = (Graphics2D) grphcs;
+    public void paint(Graphics graphics) {
+        Graphics2D g2 = (Graphics2D) graphics;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int width = getWidth();
         int height = getHeight();
@@ -114,9 +103,11 @@ public class SwitchButton extends Component {
         g2.setColor(getForeground());
         g2.setComposite(AlphaComposite.SrcOver);
         g2.fillOval((int) location, 2, height - 4, height - 4);
-        super.paint(grphcs);
+        super.paint(graphics);
     }
 
+    // MODIFIES: this
+    // EFFECTS: determines how far the sliding circle should move
     private float getAlpha() {
         float width = getWidth() - getHeight();
         float alpha = 0;
@@ -132,17 +123,18 @@ public class SwitchButton extends Component {
         return alpha;
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: starts the animation
     private void runEvent() {
         for (EventSwitchSelected event : events) {
             event.onSelected(selected);
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds an event to the events list when the button is toggled
     public void addEventSelected(EventSwitchSelected event) {
         events.add(event);
     }
 
-    public void setAlignmentX(float centerAlignment) {
-    }
 }

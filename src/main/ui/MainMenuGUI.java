@@ -2,15 +2,17 @@ package ui;
 
 import ui.keylistenerui.RoundButton;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 // GUI for the main menu, displays graphics and decks button
 public class MainMenuGUI extends JPanel implements ActionListener {
-    private JButton decksButton;
     private JPanel buttonPanel;
     private JLabel titleLabel;
 
@@ -19,7 +21,30 @@ public class MainMenuGUI extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
         setTitle();
         setButton();
+        setImage();
         setPage();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the image of the java flashcard image
+    private void setImage() {
+        try {
+            Image image = ImageIO.read(new File("./data/images/javaFlashCard.png"));
+
+            JPanel imagePanel = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    int x = (getWidth() - image.getWidth(this)) / 2;
+                    int y = (getHeight() - image.getHeight(this)) / 2;
+                    g.drawImage(image, x, y, this);
+                }
+            };
+            imagePanel.setBackground(Color.white);
+            add(imagePanel, BorderLayout.CENTER);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //MODIFIES: this
@@ -43,7 +68,7 @@ public class MainMenuGUI extends JPanel implements ActionListener {
     // MODIFIES: this
     //EFFECTS: sets up the "decks" button
     private void setButton() {
-        decksButton = new RoundButton("Decks");
+        JButton decksButton = new RoundButton("Decks");
         decksButton.addActionListener(this);
         decksButton.setFont(new Font("Arial", Font.PLAIN, 20));
         decksButton.setMargin(new Insets(5, 20, 5, 20));
