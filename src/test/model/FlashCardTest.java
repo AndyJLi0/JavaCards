@@ -54,8 +54,13 @@ public class FlashCardTest {
     void equalsAndHashCodeTest() {
         FlashCard testCard2 = new FlashCard("Where is UBC?", "Vancouver", false);
         FlashCard testCard3 = new FlashCard("Where is UBC?", "Point Grey", false);
+        CardDeck testDeck = new CardDeck("bruh");
+        boolean isNotEqual = testCard.equals(testCard3);
+        assertFalse(isNotEqual);
+        assertFalse(testCard.equals(testDeck));
+        assertFalse(testCard.equals(null));
         assertEquals(testCard, testCard2);
-        assertTrue(!testCard.equals(testCard3));
+        assertFalse(testCard.equals(testCard3));
         assertNotSame(testCard, testCard2);
         assertEquals(testCard.hashCode(),testCard2.hashCode());
 

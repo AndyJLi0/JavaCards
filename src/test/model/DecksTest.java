@@ -57,6 +57,7 @@ public class DecksTest {
         assertEquals(deck3, decksTest.fetchDeckFromDecks(2));
         assertEquals(deck1, decksTest.getCardDeckFromName("A"));
         assertEquals(deck2, decksTest.getCardDeckFromName("B"));
+        assertNull(decksTest.getCardDeckFromName(null));
         assertNull(decksTest.getCardDeckFromName("C"));
     }
 
