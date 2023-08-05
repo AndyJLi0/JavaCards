@@ -17,7 +17,7 @@ public class SwitchButton extends Component {
     private float location;
     private boolean selected;
     private boolean mouseOver;
-    private final float speed = 0.1f;
+    private final float speed = 0.2f;
     private final List<EventSwitchSelected> events;
 
     // EFFECTS: constructs a switch button with animation when pressed
