@@ -268,11 +268,9 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         JFrame frame = (JFrame) this.getRootPane().getParent();
         String flashCardText = displayOfFlashCards.getSelectedValue();
         FlashCard flashCard;
-        if (displayBackWhenOn.isSelected()) {
-            flashCard = deckForPage.getFlashCardByBack(flashCardText);
-        } else {
-            flashCard = deckForPage.getFlashCardByFront(flashCardText);
-        }
+        FlashCard flashCardBack = deckForPage.getFlashCardByBack(flashCardText);
+        FlashCard flashCardFront = deckForPage.getFlashCardByFront(flashCardText);
+        flashCard = (flashCardBack != null) ? flashCardBack : flashCardFront;
         if (e.getSource().equals(backToDecksButton)) {
             FlashCardsAppGUI.cardLayout.show(frame.getContentPane(), "Decks");
         } else if (e.getSource().equals(newFlashCardButton)) {

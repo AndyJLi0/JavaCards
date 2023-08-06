@@ -151,7 +151,15 @@ public class DecksGUI extends JPanel implements ActionListener {
     // EFFECTS: creates a new deck
     private void createNewDeck() {
         JFrame frame = (JFrame) this.getRootPane().getParent();
-        String deckName = JOptionPane.showInputDialog(frame, "Enter the deck name:");
+        ImageIcon originalIcon = new ImageIcon("./data/images/colouredFlashCard.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(scaledImage);
+        String deckName = (String) JOptionPane.showInputDialog(frame,
+                "Enter the deck name:",
+                "New Deck",
+                JOptionPane.PLAIN_MESSAGE,
+                icon,
+                null, "");
         if (deckName != null && !deckName.trim().isEmpty()) {
             CardDeck newDeck = new CardDeck(deckName);
 
@@ -171,8 +179,15 @@ public class DecksGUI extends JPanel implements ActionListener {
     // EFFECTS: renames the selected deck
     private void renameDeck(CardDeck deck) {
         JFrame frame = (JFrame) this.getRootPane().getParent();
-        String deckName = JOptionPane.showInputDialog(frame, "Rename deck to:");
-        // Check if the user clicked "OK" (i.e., deckName is not null) and the input is not empty
+        ImageIcon originalIcon = new ImageIcon("./data/images/colouredFlashCard.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(scaledImage);
+        String deckName = (String) JOptionPane.showInputDialog(frame,
+                "Rename Deck To:",
+                "Rename Deck",
+                JOptionPane.PLAIN_MESSAGE,
+                icon,
+                null, "");
         if (deckName != null && !deckName.trim().isEmpty()) {
             deckNameListModel.removeElement(deck.getCardDeckName());
             deck.renameCardDeck(deckName);
