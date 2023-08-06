@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 // GUI for a CardDeck, displays practice option, flash cards,
 // and option to add, edit, or remove cards
-public class CardDeckGUI extends JPanel implements ActionListener, ItemListener {
+public class CardDeckGUI extends JPanel implements ActionListener, ItemListener, EventSwitchSelected {
     private static DefaultListModel<String> flashCardNamesListModel;
     protected CardDeck deckForPage;
     private final JLabel title;
@@ -87,13 +87,7 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         backToDecksButton = makeButton("Decks");
         practiceButton = makeButton("Practice");
         displayBackWhenOn = new SwitchButton();
-        displayBackWhenOn.addEventSelected(selected -> {
-            if (selected) {
-                updateFlashCardsDisplayWithBack();
-            } else {
-                updateFlashCardsDisplayWithFront();
-            }
-        });
+        displayBackWhenOn.addEventSelected(this);
         newFlashCardButton = makeButton("Create");
         editFlashCardButton = makeButton("Edit");
         removeFlashCardButton = makeButton("Remove");
@@ -293,6 +287,15 @@ public class CardDeckGUI extends JPanel implements ActionListener, ItemListener 
         if (ev.getStateChange() == ItemEvent.SELECTED) {
             updateFlashCardsDisplayWithBack();
         } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
+            updateFlashCardsDisplayWithFront();
+        }
+    }
+
+    @Override
+    public void onSelected(boolean selected) {
+        if (selected) {
+            updateFlashCardsDisplayWithBack();
+        } else {
             updateFlashCardsDisplayWithFront();
         }
     }
