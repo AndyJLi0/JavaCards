@@ -23,13 +23,18 @@ public class FlashCard implements Writable {
     //MODIFIES: this
     //EFFECTS: sets the front side of the flashcard
     public void setFrontSide(String frontText) {
+        EventLog.getInstance().logEvent(new Event("Renamed Flashcard front from "
+                + frontText + " to " + this.frontSide));
         this.frontSide = frontText;
+
     }
 
     //REQUIRES: non-empty string
     //MODIFIES: this
     //EFFECTS: sets the back side of the flashcard
     public void setBackSide(String backText) {
+        EventLog.getInstance().logEvent(new Event("Renamed Flashcard back from "
+                + backText + " to " + this.backSide));
         this.backSide = backText;
     }
 

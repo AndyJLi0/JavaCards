@@ -21,18 +21,23 @@ public class Decks implements Writable {
     //EFFECTS: adds a deck to the deck list
     public void addDeckToDecks(CardDeck deck) {
         deckList.add(deck);
+        EventLog.getInstance().logEvent(new Event("Added " + deck.getCardDeckName() + " to decks"));
     }
 
     //MODIFIES: this
     //EFFECTS: removes given deck from deck list (assumed index valid from user handling)
     public void removeDeckFromDecks(int index) {
+        EventLog.getInstance().logEvent(new Event("Removed " + deckList.get(index).getCardDeckName() + " from decks"));
         deckList.remove(index);
+
     }
 
     //MODIFIES: this
     //EFFECTS: removes given deck from deck list 
     public void removeDeckFromDecks(CardDeck deck) {
         deckList.remove(deck);
+        EventLog.getInstance().logEvent(new Event("Removed " + deck.getCardDeckName() + " from decks"));
+
     }
 
     //EFFECTS: returns the of given index, assume that index is within bounds

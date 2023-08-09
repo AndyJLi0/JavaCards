@@ -38,6 +38,22 @@ an empty deck. `right arrow` shows the next card, `left arrow`  shows the previo
 - As a user, I want to have the option to save my decks and flashcards when I quit if I so choose
 - As a user, I want to have the option to load my decks and flashcards when I open the app again
 
+### Phase 4: Task 2
+Tue Aug 08 18:54:38 PDT 2023
+Added Deck1 to decks  
+Tue Aug 08 18:54:40 PDT 2023  
+Added Deck2 to decks  
+Tue Aug 08 18:54:49 PDT 2023  
+Added FlashCard to Deck1  
+Tue Aug 08 18:54:53 PDT 2023  
+Added FlashCard to Deck1  
+Tue Aug 08 18:55:01 PDT 2023  
+Renamed Flashcard back from NewBack1 to Back1  
+Tue Aug 08 18:55:01 PDT 2023  
+Renamed Flashcard front from NewFront1 to Front1  
+Tue Aug 08 18:55:05 PDT 2023  
+Removed Deck2 from decks
+
 ### Acknowledgements
 - Data Persistence in this program is based off UBC's CPSC 210 edX phase 2 Workroom Example
 - All Icons made by FreePik from www.flaticon.com

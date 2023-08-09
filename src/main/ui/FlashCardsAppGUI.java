@@ -1,6 +1,8 @@
 package ui;
 
 import model.Decks;
+import model.Event;
+import model.EventLog;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -12,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 
 // Class for frame and underlying structure of app
 public class FlashCardsAppGUI {
@@ -96,9 +99,18 @@ public class FlashCardsAppGUI {
                 if (response == JOptionPane.YES_OPTION) {
                     saveData();
                 }
+                printLog();
                 frame.dispose();
             }
         });
+    }
+
+
+    // EFFECTS: prints the log on close
+    private void printLog() {
+        for (Event event :EventLog.getInstance()) {
+            System.out.println(event.toString());
+        }
     }
 
     // MODIFIES: this
@@ -108,7 +120,7 @@ public class FlashCardsAppGUI {
         frame.getContentPane().add(decksPanel, "Decks");
         frame.getContentPane().add(mainMenuPanel, "MainMenu");
         frame.getContentPane().add(cardDeckPanel, "CardDeck");
-        frame.getContentPane().add(practicePanel,"Practice");
+        frame.getContentPane().add(practicePanel, "Practice");
         cardLayout.show(frame.getContentPane(), "MainMenu");
         frame.pack();
         frame.setLocationRelativeTo(null);

@@ -15,12 +15,15 @@ public class CardDeck implements Writable {
     public CardDeck(String cardDeckName) {
         flashCardList = new ArrayList<>();
         this.cardDeckName = cardDeckName;
+
     }
 
     //MODIFIES: this
     //EFFECTS: adds a card to the card deck
     public void addCard(FlashCard card) {
         flashCardList.add(card);
+        EventLog.getInstance().logEvent(new Event("Added FlashCard to " + this.cardDeckName));
+
     }
 
     //MODIFIES: this
@@ -28,18 +31,24 @@ public class CardDeck implements Writable {
     public void removeCard(Integer index) {
         FlashCard card = getFlashCard(index);
         flashCardList.remove(card);
+        EventLog.getInstance().logEvent(new Event("Removed FlashCard from " + this.cardDeckName));
+
     }
 
     // MODIFIES: this
     // EFFECTS: removes given card from card deck; implicit assumption of card existing
     public void removeCard(FlashCard card) {
         flashCardList.remove(card);
+        EventLog.getInstance().logEvent(new Event("Removed FlashCard from " + this.cardDeckName));
+
     }
 
     //MODIFIES: this
     //EFFECTS: renames the flashcard deck name
     public void renameCardDeck(String name) {
         this.cardDeckName = name;
+        EventLog.getInstance().logEvent(new Event("Renamed " + name + " deck to " + this.cardDeckName));
+
     }
 
     //MODIFIES: this
@@ -90,25 +99,6 @@ public class CardDeck implements Writable {
         return cardDeckName;
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("cardDeckName", cardDeckName);
-        json.put("flashCards", flashCardsToJson());
-        return json;
-    }
-
-    //EFFECTS: returns flashCards in deck as a JSON array
-    private JSONArray flashCardsToJson() {
-        JSONArray jsonArray = new JSONArray();
-
-        for (FlashCard flashCard : flashCardList) {
-            jsonArray.put(flashCard.toJson());
-        }
-        return jsonArray;
-    }
-
-
     // EFFECTS: returns the flashcard given the backside of text, null if it doesn't exist
     public FlashCard getFlashCardByBack(String flashCardText) {
         for (FlashCard fc: flashCardList) {
@@ -127,5 +117,23 @@ public class CardDeck implements Writable {
             }
         }
         return null;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("cardDeckName", cardDeckName);
+        json.put("flashCards", flashCardsToJson());
+        return json;
+    }
+
+    //EFFECTS: returns flashCards in deck as a JSON array
+    private JSONArray flashCardsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (FlashCard flashCard : flashCardList) {
+            jsonArray.put(flashCard.toJson());
+        }
+        return jsonArray;
     }
 }
