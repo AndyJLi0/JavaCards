@@ -1,5 +1,35 @@
-# JavaCards: A Flashcard Application
 
+<p align="center" >
+    <a href="https://github.com/chenanton/virtual-ball-pit">
+        <img src="data/images/javaFlashCard.png" alt="Logo" width="120" >
+    </a>
+    <h2 align="center">JavaCards: A Flashcard Application</h2>
+
+  <p align="center">
+    This program is a simple flashcard app with the ability to save and practice decks. <br>A project for CPSC 210 (Software Construction) at the University of British Columbia.
+    <br />
+  </p >
+</p>
+
+
+<details id="javacards-heading">
+  <summary><b> Table of Contents </b></summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+        <ul>
+        <li><a href="#why-i-made-this-project">Why I Created This</a></li>
+        </ul>
+    </li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#user-stories">User Stories</a></li>
+    <li><a href="#event-log-example">Event-Log Example</a></li>
+    <li><a href="#future-improvements">Future Improvements</a></li>
+    <li><a href="#acknowledgements">Acknowledgments</a></li>
+  </ol>
+</details>
+
+### About the Project
 >**JavaCards** is a java based desktop app designed to make and use flashcards. There's no limit
 to how many card decks you can make and how many cards in a deck itself. There's a practice feature shuffles the deck,
 and you can flip cards as many times as you like. My app is intended to be used by university or college students that 
@@ -11,7 +41,11 @@ of today's popular flashcard apps are either online and require paid subscriptio
 complicated interfaces and are tough for new users to use. Learning and memorizing doesn't have to
 be hard, and I hope my app helps with it.
 
-### Instructions for Grader
+
+<p align="right">(<a href="#javacards-heading">back to top</a>)</p>
+
+
+### Getting Started
 > - You can generate the first required action related to adding Xs to a Y by adding a deck to your decks by pressing the 
 `New Deck` button in the JavaCard Decks page.
 > - You can generate the second required action related to adding Xs to a Y by renaming or removing a deck from your decks
@@ -24,6 +58,7 @@ You will be prompted to save.
 application.
 > - **Additional Note**: A card needs to be selected for the practice button to work, which prevent practicing with
 an empty deck. `right arrow` shows the next card, `left arrow`  shows the previous card, and `space` flips the card.  
+<p align="right">(<a href="#javacards-heading">back to top</a>)</p>
 
 ### User Stories
 > - As a user, I want to be able to add card decks to my set of decks
@@ -36,7 +71,10 @@ an empty deck. `right arrow` shows the next card, `left arrow`  shows the previo
 > - As a user, I want to have the option to save my decks and flashcards when I quit if I so choose
 > - As a user, I want to have the option to load my decks and flashcards when I open the app again
 
-### Phase 4: Task 2
+
+<p align="right">(<a href="#javacards-heading">back to top</a>)</p>
+
+### Event-Log Example
 
 >Tue Aug 08 18:54:38 PDT 2023
 Added Deck1 to decks  
@@ -53,7 +91,9 @@ Renamed Flashcard front from NewFront1 to Front1
 Tue Aug 08 18:55:05 PDT 2023  
 Removed Deck2 from decks
 
-### Phase 4: Task 3
+<p align="right">(<a href="#javacards-heading">back to top</a>)</p>
+
+### Future Improvements
 >If I had more time to work on this project before submission, I would first aim to improve code robustness. 
 I have no exceptions thrown and many of the times I want to prevent something from happening, 
 I explicitly check using multiple if statements. I could instead add exceptions to both my UI and model package
@@ -70,7 +110,13 @@ the un-shuffled flashcard list. I could potentially remove the 2 flashcard lists
 flashcards through the card deck, and have a method to un-shuffle the card deck back to its original state.
 
 
+<p align="right">(<a href="#javacards-heading">back to top</a>)</p>
+
+
 ### Acknowledgements
 > - Data Persistence in this program is based off UBC's CPSC 210 edX phase 2 Workroom Example
 > - All Icons made by FreePik from www.flaticon.com
 > - ToggleButton design from DJ-Raven java-swing-switch-button repo
+
+
+<p align="right">(<a href="#javacards-heading">back to top</a>)</p>

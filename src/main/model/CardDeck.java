@@ -101,8 +101,8 @@ public class CardDeck implements Writable {
 
     // EFFECTS: returns the flashcard given the backside of text, null if it doesn't exist
     public FlashCard getFlashCardByBack(String flashCardText) {
-        for (FlashCard fc: flashCardList) {
-            if (flashCardText == fc.getBackSide()) {
+        for (FlashCard fc : flashCardList) {
+            if (flashCardText.equals(fc.getBackSide())) {
                 return fc;
             }
         }
@@ -111,8 +111,8 @@ public class CardDeck implements Writable {
 
     // EFFECTS: returns the flashcard given the front-side of text, null if it doesn't exist
     public FlashCard getFlashCardByFront(String flashCardText) {
-        for (FlashCard fc: flashCardList) {
-            if (flashCardText == fc.getFrontSide()) {
+        for (FlashCard fc : flashCardList) {
+            if (flashCardText.equals(fc.getFrontSide())) {
                 return fc;
             }
         }
