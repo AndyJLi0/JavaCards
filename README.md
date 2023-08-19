@@ -1,6 +1,6 @@
 
 <p align="center" >
-    <a href="https://github.com/chenanton/virtual-ball-pit">
+    <a href="https://github.com/AndyJLi0/JavaCards">
         <img src="data/images/javaFlashCard.png" alt="Logo" width="120" >
     </a>
     <h2 align="center">JavaCards: A Flashcard Application</h2>
