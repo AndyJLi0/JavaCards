@@ -6,8 +6,7 @@
     <h2 align="center">JavaCards: A Flashcard Application</h2>
 
   <p align="center">
-    This program is a simple flashcard app with the ability to save and practice decks. <br>A project for CPSC 210 (Software Construction) at the University of British Columbia.
-    <br />
+    This program is a simple flashcard app with the ability to save and practice decks.
   </p >
 </p>
 
