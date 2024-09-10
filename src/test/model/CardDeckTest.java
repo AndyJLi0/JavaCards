@@ -47,14 +47,14 @@ public class CardDeckTest {
         testDeck.addCard(testFlashCard);
         testDeck.addCard(testFlashCard2);
         testDeck.addCard(testFlashCard3);
-        testDeck.removeCard(2);
-        testDeck.removeCard(0);
+        testDeck.removeCard(Integer.valueOf(2));
+        testDeck.removeCard(Integer.valueOf(0));
         assertEquals(1, testDeck.getSizeOfDeck());
         assertEquals(testFlashCard2, testDeck.getFlashCard(0));
 
         testDeck.addCard(testFlashCard);
         testDeck.addCard(testFlashCard3);
-        testDeck.removeCard(2);
+        testDeck.removeCard(Integer.valueOf(2));
         assertEquals(2, testDeck.getSizeOfDeck());
         testDeck.removeCard(testFlashCard2);
         testDeck.removeCard(testFlashCard);
